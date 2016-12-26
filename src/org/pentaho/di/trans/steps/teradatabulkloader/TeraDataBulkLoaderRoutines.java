@@ -429,11 +429,12 @@ public class TeraDataBulkLoaderRoutines {
    *
    * @param jobName the job name
    * @param description the description
+   * @param encoding of data file (GW)
    * @param code the code
    * @return the string
    */
-  private String teradataJob( String jobName, String description, String code ) {
-    return "DEFINE JOB " + jobName + "\nDESCRIPTION '" + description + "'\n(\n" + code + ");";
+  private String teradataJob( String jobName, String description, String fileEncoding, String code ) {
+    return "USING CHARACTER SET " + fileEncoding + "\nDEFINE JOB " + jobName + "\nDESCRIPTION '" + description + "'\n(\n" + code + ");";
   }
 
   /**
@@ -628,6 +629,7 @@ public class TeraDataBulkLoaderRoutines {
     String script =
         teradataJob( BaseMessages.getString( PKG, "TeraDataBulkLoaderDialog.Script.Name" ), // "JobName_Goes_Here",
             BaseMessages.getString( PKG, "TeraDataBulkLoaderDialog.Script.Description" ), // "Description goes here",
+            this.meta.getEncodingName(), // GW: "Encoding goes here",
             ( tableSchema != null ? tableSchema.toString() : "" ) + ( ddlOptions != null ? ddlOptions.toString() : "" )
                 + ( dataConnector != null ? dataConnector.toString() : "" )
                 + ( updateOptions != null ? updateOptions.toString() : "" ) + ( dropTables != null ? dropTables : "" )

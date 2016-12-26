@@ -104,6 +104,7 @@ public class TeraDataBulkLoaderMeta extends BaseStepMeta implements StepMetaInte
   public static final String TWB_ROOT_FIELD = "twbRoot";
   public static final String INSTALL_PATH_FIELD = "installPath";
   public static final String JOB_NAME_FIELD = "jobName";
+  public static final String ENCODING_FIELD = "EncodingName";
 
   public static final String SCHEMA_FIELD = "schema";
   public static final String TABLE_FIELD = "table";
@@ -147,6 +148,10 @@ public class TeraDataBulkLoaderMeta extends BaseStepMeta implements StepMetaInte
 
   /** The job name. */
   private String jobName = null;
+  
+  
+  /** GW: Encoding por default */
+  private String EncodingName = BaseMessages.getString( PKG, "TeraDataBulkLoaderDialog.Script.Encoding.Default" );
 
   /** The generate script. */
   private boolean generateScript = false;
@@ -353,6 +358,23 @@ public class TeraDataBulkLoaderMeta extends BaseStepMeta implements StepMetaInte
     return this.jobName = val;
   }
 
+  /* GW */
+  
+  /**
+   * Sets the encoding name.
+   * 
+   * @param val
+   *          the val
+   * @return the string
+   */
+  
+  public String setEncodingName( String val ) {
+	    return this.EncodingName = val;
+	  }
+  /* GW */
+
+  
+  
   /**
    * Gets the job name.
    * 
@@ -362,6 +384,17 @@ public class TeraDataBulkLoaderMeta extends BaseStepMeta implements StepMetaInte
     return this.jobName;
   }
 
+  /** GW 
+   * Gets the encoding name.
+   * 
+   * @return the encoding name
+   */
+  public String getEncodingName() {
+    return this.EncodingName;
+  }
+
+  
+  
   /**
    * Gets the variable file.
    * 
@@ -1120,6 +1153,9 @@ public class TeraDataBulkLoaderMeta extends BaseStepMeta implements StepMetaInte
       twbRoot = XMLHandler.getTagValue( stepnode, "twbRoot" );
 
       jobName = XMLHandler.getTagValue( stepnode, "jobName" );
+      
+      // GW
+      EncodingName = XMLHandler.getTagValue( stepnode, "EncodingName" );
 
       String con = XMLHandler.getTagValue( stepnode, "connection" );
       databaseMeta = DatabaseMeta.findDatabase( databases, con );
@@ -1231,6 +1267,7 @@ public class TeraDataBulkLoaderMeta extends BaseStepMeta implements StepMetaInte
     retval.append( "    " ).append( XMLHandler.addTagValue( "twbRoot", twbRoot ) );
     retval.append( "    " ).append( XMLHandler.addTagValue( "installPath", installPath ) );
     retval.append( "    " ).append( XMLHandler.addTagValue( "jobName", jobName ) );
+    retval.append( "    " ).append( XMLHandler.addTagValue( "EncodingName", EncodingName ) );
 
     // generate options
     retval.append( "    " ).append( XMLHandler.addTagValue( "schema", schemaName ) );
@@ -1320,6 +1357,7 @@ public class TeraDataBulkLoaderMeta extends BaseStepMeta implements StepMetaInte
       twbRoot = rep.getStepAttributeString( id_step, "twbRoot" );
       installPath = rep.getStepAttributeString( id_step, "installPath" );
       jobName = rep.getStepAttributeString( id_step, "jobName" );
+      EncodingName = rep.getStepAttributeString( id_step, "EncodingName" );
       fifoFileName = rep.getStepAttributeString( id_step, "fifoFileName" );
       randomizeFifoFilename = rep.getStepAttributeBoolean( id_step, RANDOMIZE_FIFO_FILE_NAME_FIELD );
 
@@ -1388,6 +1426,7 @@ public class TeraDataBulkLoaderMeta extends BaseStepMeta implements StepMetaInte
       rep.saveStepAttribute( id_transformation, id_step, "twbRoot", twbRoot );
       rep.saveStepAttribute( id_transformation, id_step, "installPath", installPath );
       rep.saveStepAttribute( id_transformation, id_step, "jobName", jobName );
+      rep.saveStepAttribute( id_transformation, id_step, "EncodingName", EncodingName );
       rep.saveStepAttribute( id_transformation, id_step, "fifoFileName", fifoFileName );
       rep.saveStepAttribute( id_transformation, id_step, RANDOMIZE_FIFO_FILE_NAME_FIELD, randomizeFifoFilename );
 

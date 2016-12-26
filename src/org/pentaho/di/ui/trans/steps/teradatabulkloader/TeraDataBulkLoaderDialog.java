@@ -426,6 +426,12 @@ public class TeraDataBulkLoaderDialog extends BaseStepDialog implements StepDial
     final TextVarMenuItem wJobName =
         new NoButtonTextVarMenuItem( otherGroup, props, transMeta, lsMod, wRandomizeFifoName,
             "TeraDataBulkLoaderDialog.JobName.Label" );
+    
+    /* GW - boton de encoding  wTbuildPath */ 
+    final TextVarMenuItem wEncodingName =
+        new NoButtonTextVarMenuItem( otherGroup, props, transMeta, lsMod, wJobName,
+                "TeraDataBulkLoaderDialog.Script.Encoding" );
+    /* fin opcion encoding */
 
     cExecutionItems.setLayout( new FormLayout() );
     FormData fdExecutionItems = new FormData();
@@ -452,6 +458,9 @@ public class TeraDataBulkLoaderDialog extends BaseStepDialog implements StepDial
         inf.setTbuildPath( wTbuildPath.getText() );
         inf.setFifoFileName( wDataFile.getText() );
         inf.setJobName( wJobName.getText() );
+        /* GW */
+        inf.setEncodingName( wEncodingName.getText() );
+        /* fin GW */ 
         inf.setRandomizeFifoFilename( randomizeFifoName.getSelection() );
       }
 
@@ -485,6 +494,12 @@ public class TeraDataBulkLoaderDialog extends BaseStepDialog implements StepDial
         if ( ( val = input.getJobName() ) != null ) {
           wJobName.setText( val );
         }
+        
+        if ( ( val = input.getEncodingName() ) != null ) {
+            wEncodingName.setText( val );
+          }
+
+        
         randomizeFifoName.setSelection( input.isRandomizeFifoFilename() );
       }
     } );
